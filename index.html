@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Ridlnux</title>
+	<style> body { margin: 0; background: #333; } </style>
+	<script src="src/phaser.min.js"></script>
+	<script src="src/Boot.js"></script>
+	<script src="src/Preloader.js"></script>
+	<script src="src/MainMenu.js"></script>
+        <script src="src/About.js"></script>
+        <script src="src/Sign.js"></script>
+	<script src="src/StoryHowto.js"></script>
+	<script src="src/Game.js"></script>
+
+	<script type="text/javascript">var switchTo5x=true;</script>
+	<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+	<script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
+	
+
+</head>
+<body id="body">
+<script>
+(function() {
+	var game = new Phaser.Game(1280, 720, Phaser.CANVAS, 'game');
+	game.state.add('Boot', Ridlnux.Boot);
+	game.state.add('Preloader', Ridlnux.Preloader);
+	game.state.add('MainMenu', Ridlnux.MainMenu);
+	game.state.add('About', Ridlnux.About);
+	game.state.add('Sign', Ridlnux.Sign);
+	game.state.add('StoryHowto', Ridlnux.StoryHowto);
+	game.state.add('Game', Ridlnux.Game);
+	game.state.start('Boot');
+})();
+</script>
+</body>
+
+<script type="text/javascript">stLight.options({publisher: "ur-417d94ca-f92c-2d19-f559-a7d68669a8a1", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+<script>
+var options={ "publisher": "ur-417d94ca-f92c-2d19-f559-a7d68669a8a1", "position": "left", "ad": { "visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": { "items": ["facebook", "twitter", "linkedin", "googleplus", "evernote", "email", "sharethis"]}};
+var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
+</script>
+
+</html>
+
