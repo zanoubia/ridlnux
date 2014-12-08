@@ -74,7 +74,7 @@ Ridlnux.Sign.prototype = {
 
 			if(e.keyCode == 13)
 			{
-				if ((current == 0)  && (textinputname.length != 0) &&(textinputpass.lenght != 0))
+				if ((current == 0)  && (textinputname.length != 0) &&(textinputpass.lenght != 0) )
 				{
 					current = 1;
 				}
@@ -95,7 +95,7 @@ Ridlnux.Sign.prototype = {
 
                         if(e.keyCode != 8)
                         {
-                                if (input.length < 8)
+                                if (input.length < 16)
                                 {
                                         input = input + letter;
                                         input = input.trim();
@@ -208,15 +208,32 @@ Ridlnux.Sign.prototype = {
 	},
 
 	
-	
+	sendform: function(name,password,action){
+		var data = new FormData();
+		data.append('username', name );
+		data.append('password', password);
 
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', action , true);
+		//xhr.onload = function () {
+		    // do something to response
+		  //  console.log(this.responseText);
+		//};
+		xhr.send(data);	
+		re = xhr.responseText;
+		
+		
+	},
 
 	signin: function() {
-		Ridlnux.playername =textinputname ; 
+		Ridlnux.playername =textinputname ;
+		result = this.sendform(textinputname,textinputpass,"http://192.168.42.252/players/signin");		 
 		this.game.state.start('Game');
 		
 	},
 	signup: function() {
+		Ridlnux.playername =textinputname;
+                result = this.sendform(textinputname,textinputpass,"http://192.168.42.252/players/signup");
 		this.game.state.start('Game');
 	}
 };

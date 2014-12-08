@@ -1,5 +1,7 @@
 var Ridlnux = {
-	playername :  ""
+	playername :  "",
+	levelid : 0 ,
+	hintid : 0
 };
 Ridlnux.Boot = function(game) {};
 Ridlnux.Boot.prototype = {

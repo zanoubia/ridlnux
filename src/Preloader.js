@@ -7,6 +7,7 @@ Ridlnux.Preloader.prototype = {
 		this.preloadBar = this.add.sprite(this.game.world.centerX - 500 , this.game.world.centerY, 'preloaderBar');
 		this.load.setPreloadSprite(this.preloadBar);
 
+		this.load.image('answerback', 'img/answerback.png');
 		this.load.image('backgroundsign', 'img/backgroundsign1280x720.png');
 		this.load.image('playbackground', 'img/playbackground.png');
 		this.load.image('menubackground', 'img/mainmenu.png');
@@ -20,6 +21,7 @@ Ridlnux.Preloader.prototype = {
 		this.load.image('tuxback','img/tuxback192x199.png');
 		this.load.image('signin','img/signin.png');
 		this.load.image('signup','img/signup.png');
+		this.load.image('back','img/back125x125.png');
 		
 
 		this.load.spritesheet('aboutmenu', 'img/aboutmenu754x52.png',754,26,2,0,0);

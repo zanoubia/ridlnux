@@ -9,15 +9,34 @@ Ridlnux.Game = function(game) {
 	var marginleft = 0;
 	var margintop = 0;
 	var level = [];	
+	var answer = "" ;
+	var inputreturn = "";
+	var sub  = 0;
 };
 
 Ridlnux.Game.prototype = {
 
 	create: function() {
+		sub  = 0;
+		answer = "" ;
+		inputreturn = "";
+		letters =["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z", "_"];
+
 		background = this.game.add.sprite(0, 0, 'playbackground');
+		answerback = this.game.add.sprite(36,114, 'answerback');
+		answerfield =   this.game.add.text(39, 146, "click to write your answer and hit enter to submit it", {
+                        font: "20px Arial",
+                        fill: "#ffffff",
+                        align: "center",
+                        wordWrap: true,
+                        wordWrapWidth :300
+                        });
+		
+
 		restbutton = this.game.add.button(816,536,'reset',this.resetsession);
 		logoutbutton = this.game.add.button(1203,646,'logout',this.logout);
 		helpbutton = this.game.add.button(1128,646,'help',this.help);
+
 		tuxback = this.game.add.sprite(567, 498 ,'tuxback');
 
 		wizard = this.game.add.button(0,this.game.world.centerY * 6/ 5 ,'wizard',this.playhint,this,0,1);
@@ -53,10 +72,16 @@ Ridlnux.Game.prototype = {
                         });
 		hint.visible = false;
 
-
+		enterkey = this.game.input.keyboard.addKey(13);
 	},
 
 	getlevel : function() {
+		//var data = new FormData();
+                //data.append('username', Ridlnux.playername );
+                //var xhr = new XMLHttpRequest();
+                //xhr.open('POST', 'http://192.168.42.252:5000/levels/current' , true);
+		//xhr.send(data);
+                //re = xhr.responseText;
 		return ["Level0","There is no place like home"];
 	},
 
@@ -64,9 +89,20 @@ Ridlnux.Game.prototype = {
 
 	},
 	logout: function() {
-		
+		//var data = new FormData();
+                //data.append('username', Ridlnux.playername );
+                //var xhr = new XMLHttpRequest();
+                //xhr.open('POST', 'http://192.168.42.252:5000/logout' , true);
+                //xhr.send(data);
+                //re = xhr.responseText;
+
 	},
 	resetsession: function(){
+		//var xhr = new XMLHttpRequest();
+		//data.append('username', Ridlnux.playername );
+		//var xhr = new XMLHttpRequest();
+		//xhr.open('POST', 'http://192.168.42.252:5000/reset' , true);
+		//re = xhr.responseText;
 		
 	},
 	playhint: function(){
@@ -79,6 +115,28 @@ Ridlnux.Game.prototype = {
 		talkingwizard.stop(true);
 		bulle.visible = false;
                 hint.visible = false ;
+		hint.setText(level[1]);
+	},
+	
+	correct: function(){
+		bulle.visible = true;
+		wizard.inputEnabled = false;
+		wizard.animations.play('talking');
+		hint.setText("Correct Answer! Now you can pass to the next level");
+		hint.visible = true;
+		tuxback.visible = false;
+		tux.visible = true;
+		tux.animations.play('dancing');
+	},
+	
+	uncorrect: function(){
+		bulle.visible = true;
+		wizard.animations.play('talking');
+		hint.setText("Wrong answer. You shall not pass !!");
+		hint.visible = true;
+		tuxback.visible = false;
+		tux.visible = true;
+                tux.animations.play('wrong');
 	},
 
 	setiframe: function(){
@@ -105,13 +163,83 @@ Ridlnux.Game.prototype = {
 		iframe.setAttribute("style","position:absolute;color=#77ccff;width:"+width+"px;margin-left:"+marginleft+"px;margin-top:"+margintop+"px;right:"+x+";top:"+y+";");
 	},
 
+	correctanswer: function(answer){
+		answerfield.setText("ok");
+		return "ok";
+	},	
+	
+	nextlevel: function(){
 
+	},
+	submitanswer: function(){
+		
+		correction = this.correctanswer(answer);
+		if (correction == "ok")
+		{
+			this.uncorrect();
+			//this.nextlevel();
+		}
+		else if (correction == "ko")
+		{
+			this.uncorrect();
+		}
+		else
+		{
+			hint.setText("Ohohoooo, internal error, try later!"); 
+		}
+	},
+
+	capturetext: function(text,input) {
+
+                this.game.input.keyboard.onDownCallback = function(e) {
+			//if(e.keyCode == 13)
+                        //{
+                          //      if (answer.lenght != 0)
+                            //    {
+                                       
+                              //          answerfield.setText(submit);
+                                //}
+                        //}
+			if ((64<e.keyCode) && (e.keyCode<91))
+                	{
+                      		letter = letters[e.keyCode - 65];
+                       	}
+                       	else if (e.keyCode==56)
+                        {
+                               	letter = '_';
+                        }
+			
+
+                        if(e.keyCode != 8 && e.keyCode!=13)
+                   	{
+                        	input = input + letter;
+                                input = input.trim();
+                                letter = "";
+                                text.setText(input);
+                                inputreturn = input;
+                        }
+                        
+                        else if (input.length >0 && e.keyCode!=13)
+                        {
+                               	n = input.length -1 ;
+                               	input = input.slice(0,n);
+                               	text.setText(input);
+                               	inputreturn = input;
+                        }
+
+                }
+	},
+					
 
 	update : function(){		
 		
 		this.style();
 		wizard.events.onInputOut.add(this.wizardout, this);
-		
+		this.capturetext(answerfield,answer);
+                answer = inputreturn;
+		enterkey.onDown.add(this.submitanswer, this);
+			
+	
                 			
 	}
 

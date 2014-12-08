@@ -1,0 +1,46 @@
+Ridlnux.Game = function(game) {
+        var gamecanvas = null;
+        var element = null;
+        var iframe = null;
+        var x=0;
+        var y=0;
+        var width = "";
+        var height = "";
+        var marginleft = 0;
+        var margintop = 0;
+};
+
+Ridlnux.Game.prototype = {
+	
+	create: function() {
+		background = this.game.add.sprite(0,0,'playbackground');
+		//this.setiframe();		
+	},
+
+	setiframe : function() {
+		this.game.canvas.id= "gamecanvas";
+		gamecanvas = document.getElementById("gamecanvas");
+                iframe = document.createElement("iframe");
+                iframe.setAttribute("src","https://192.168.42.252:4200");
+                iframe.setAttribute("id","idframe");
+		this.style();
+                element = document.getElementById("body");
+                element.appendChild(iframe);
+	},
+
+	style : function() {
+                width = Number(gamecanvas.style.width.replace(/[^\d\.\-]/g, ''))/4 ;
+                height = Number(gamecanvas.style.height.replace(/[^\d\.\-]/g, ''))/4  ;
+                marginleft= gamecanvas.style.marginLeft ;
+                margintop= gamecanvas.style.marginTop ;
+                x= this.game.stage.offset.x;
+                y= this.game.stage.offset.y;
+                iframe.setAttribute("style","position:absolute;color=#77ccff;width:"+width+"px;height:"+height+";margin-left:"+marginleft+";margin-to$
+
+        }
+	
+	update : function() {
+		//this.style();
+	}
+
+};
